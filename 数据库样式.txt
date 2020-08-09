@@ -1,0 +1,2 @@
+id   statDate   goodsId   goodsName   goodsFavCnt   goodsUv   goodsPv   payOrdrCnt  goodsVcr   pctGoodsVcr   payOrdrGoodsQty payOrdrUsrCnt
+payOrdrAmt   cfmOrdrCnt  cfmOrdrGoodsQty  isNewstyle

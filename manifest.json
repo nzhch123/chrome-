@@ -1,0 +1,29 @@
+{
+   "background": {
+      "page": "background.html"
+   },
+   "browser_action": {
+      "default_icon": "img/Free-Converter.com-pts_128px_1199135_easyicon.net-30821134.png",
+      "default_popup": "popup.html",
+      "default_title": "我的测试"
+   },
+   "content_scripts": [ {
+      "css": [ "css/bootstrap-modal.css", "css/jquery.dataTables.min.css", "css/buttons.dataTables.min.css", "css/style.css" ],
+      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js"],
+      "matches": ["*://*.pinduoduo.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval' https://hm.baidu.com/hm.js https://ssl.dianzhentan.com; object-src 'self'",
+   "description": "我在测试",
+   
+   "icons": {
+      "128": "img/PTS_128px_1199135_easyicon.net.ico",
+      "48": "img/PTS_128px_1199135_easyicon.net.ico"
+   },
+   "key": "AIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr8QiSL1oaToyT0IBRnUbMeIrDvjSLSQRvzNGG00vigynr+tibnHiFLg+piyc8vNB+dWDPcyYsUyeC0oCHNtqyKB56NuEXuwCmdTUYJFOijlVXSolxsvshTjNLTAE7m6b0WcF2+jp/8IZMQTIvZPM+AD8nv4oOHDPgh6vj15Q967b0pF97L2xjELapKah50HmAGR5AFZSe2vW4nutOzXiQEiS7jSm0w3Nw3aV7zGqWoejx+Nj54+rJ3oSArbOrR10dyha8VQDtWsxzQIMREMExa2MMWPbx61Ju3FoIW5gCbqzlv+slf2bP/5EuhUDbznVTu8ZoCb2T/PzlnWG733yiwIDAQAB",
+   "manifest_version": 2,
+   "name": "测试测试测试",
+   "permissions": [ "cookies", "activeTab", "contextMenus", "tabs", "storage", "webRequest", "management", "webRequestBlocking", "*://*/*" ],
+   "update_url": "http://upext.chrome.360.cn/intf.php?method=ExtUpdate.query",
+   "version": "1.0.5.4"
+}
