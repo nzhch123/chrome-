@@ -7,8 +7,6 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
             if (details.requestHeaders[j].name === 'Origin')
                 details.requestHeaders[j].value = 'https://mms.pinduoduo.com';
         }
-		
-		chrome.storage.local.set({i:})	
 			
 
 	}, {

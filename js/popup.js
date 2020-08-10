@@ -7,10 +7,10 @@ $("#sub").click(function(){
 						"Access-Control-Allow-Origin":'*'
 					},
 					
-					"method": "GET",
+					"method": "POST",
 				})
 				.then(response=>response.json())
-				.then(response =>
+				.then(response =>{
 				if (response.code=="200"){
 					
 						sendMessageToContentScript({cmd:'test', value:'success'}, function(response)
@@ -21,7 +21,7 @@ $("#sub").click(function(){
 				else{
 					alert(response.msg);
 				}
-				
+	}
 				
 				)
 					 

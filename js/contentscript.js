@@ -1,21 +1,29 @@
+var data
+all_data={}
+var btn = document.createElement("BUTTON");
+document.querySelector('#pdd-app-skeleton-main-content ').appendChild(btn);
+//document.body.appendChild(btn);
+btn.innerText = "点击获取资料"
+btn.style.width="200px"
+btn.style.width="100px"
+btn.style.display="none"
+var forward = $("body>div:nth-child(3)>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
+
+
+
+
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
 	// console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
 	if(request.cmd == 'test') 
 	{
-		if(request.value=='success')
-		{
-			var data
-	all_data={}
-	var btn = document.createElement("BUTTON");
-	document.querySelector('#pdd-app-skeleton-main-content ').appendChild(btn);
-	//document.body.appendChild(btn);
-	btn.innerText = "点击获取资料"
-	btn.style.width="200px"
-	btn.style.width="100px"
-	var forward = $("body>div:nth-child(3)>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
+		// if(request.value=='success') {
+		// 	btn.style.display="inline"
+		// }
+		alert("收到")
 		}
-	}
+
 });
 
 
@@ -152,28 +160,9 @@ function randomNum(minNum,maxNum){
             break; 
     } 
 } 
-function download()
-{
-	fetch('http://somehost/check-permission', options).then(res => {
-		if (res.code === 0) {
-		var a = document.createElement('a');
-		var url = res.data.url;
-		var filename = 'myfile.zip';
-		a.href = url;
-		a.download = filename;
-		a.click();
-		} else {
-		alert('You have no permission to download the file!');
-	}
-	});
+
 	
-	
-	
-	
-	
-	
-	
-}
+
 
 function get(data)
 {
