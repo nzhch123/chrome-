@@ -15,7 +15,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 		
 		
 		data_h[j]=an
-		console.log(data_h)
+		//console.log(data_h)
 		}	
     }
 	, {
@@ -44,7 +44,7 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 		reader.onloadend = function (e) {
 		
 		var send=reader.result; //a Hello world!
-				console.log(k,send)
+				//console.log(k,send)
 
 		data[k]=send
 		}
@@ -112,23 +112,3 @@ chrome.webRequest.onBeforeSendHeaders.addListener(
 });
 
 
-/*  chrome.webRequest.onBeforeSendHeaders.addListener(
-        function(details) {
-			console.log('head')
-					if(i%2==1){
-		
-  		chrome.tabs.query(
-			{active: true, currentWindow: true}, 
-			function(tabs) {
-				chrome.tabs.sendMessage(
-					tabs[0].id, 
-					details.requestHeaders[1].value
-					);
-}); 
-}
-		
-		}
-             ,
-        {urls: ["https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsSpanDateList"]},
-        [ "requestHeaders"]); 
-		   */

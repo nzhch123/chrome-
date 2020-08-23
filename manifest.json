@@ -9,7 +9,7 @@
    },
    "content_scripts": [ {
       "css": [ "css/bootstrap-modal.css", "css/jquery.dataTables.min.css", "css/buttons.dataTables.min.css", "css/style.css" ],
-      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js"],
+      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js","js/layer.js"],
       "matches": ["*://*.pinduoduo.com/*" ],
       "run_at": "document_end"
    } ],

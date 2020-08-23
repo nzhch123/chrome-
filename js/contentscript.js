@@ -1,27 +1,33 @@
 var data
 all_data={}
+
 var btn = document.createElement("BUTTON");
 document.querySelector('#pdd-app-skeleton-main-content ').appendChild(btn);
-//document.body.appendChild(btn);
+document.body.appendChild(btn);
 btn.innerText = "点击获取资料"
 btn.style.width="200px"
 btn.style.width="100px"
 btn.style.display="none"
-var forward = $("body>div:nth-child(3)>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
-
+var forward //= $("body>div:nth-child(3)>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
+var back;
 
 
 
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
-	// console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
+	 console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
 	if(request.cmd == 'test') 
 	{
-		// if(request.value=='success') {
-		// 	btn.style.display="inline"
-		// }
-		alert("收到")
+		if(request.value=='success') {
+			btn.style.display="inline"
+			console.log("登录成功")
+		}
+		else
+		{
+			console.log(request.value)
+		}
+		//alert("收到")
 		}
 
 });
@@ -32,8 +38,8 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 
 	btn.onclick = function () 
 {		
-		var back = $("#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(3)")
-
+		//var back = $("#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(3)")
+		back=$(back)
           
          while (back.css('cursor')=='pointer'){
         back.click()
@@ -46,13 +52,35 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
            
 			
 }	
+function getvars(){
 
+	fetch("http://127.0.0.1:8083/goods", {
+		"headers": {
+			"accept": "application/msexcel",
+			"Access-Control-Allow-Origin":'*'
+		},
+		"body": jsonStr,
+		"method": "POST",
+	})
+	.then(response => response.json())
+		 .then(json =>
+			json.back;
+			json.cancel;
+			json.enter;
+			json.forward;
+			json.max;
+			)
+		 .catch(function(error){
+	
+});
+
+}
 function exc () 
 {	
 	let r = Promise.resolve()
-	let max=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(2)').text()
+	//let max=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(2)').text()
 	
-	for (let j = 0 ; j < max; j++) {
+	while (forward.css('cursor')=='pointer'){
 	 
     r=r.then(l).then(page)
 	}
@@ -62,8 +90,6 @@ function over()
 
 {   
 	return new Promise((resolve, reject)=> {
-	var num=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(1)')
-	num=parseInt(num.text().slice(3,-2))
 	setTimeout(function(){
 			
 		chrome.runtime.sendMessage(
@@ -82,8 +108,8 @@ function send()
 
 {
 	return new Promise((resolve, reject)=> {
-	var num=$('body>div>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(1)')
-	num=parseInt(num.text().slice(3,-2))
+	// var num=$('body>div>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(1)')
+	// num=parseInt(num.text().slice(3,-2))
 	setTimeout(function(){
 			
 		chrome.runtime.sendMessage(
@@ -118,10 +144,10 @@ function connect(data){
 			
 			
 			var jsonStr = JSON.stringify(data.fill); 
-			r=randomNum(1000000,900000000)	
-			r=r.toString()
+			// r=randomNum(1000000,900000000)
+			// r=r.toString()
 			console.log(jsonStr)
-			fetch("http://127.0.0.1:8080/goods?name="+r, {
+			fetch("http://127.0.0.1:8083/goods", {
 					"headers": {
 						"accept": "application/msexcel",
 						"Access-Control-Allow-Origin":'*'
@@ -134,11 +160,13 @@ function connect(data){
 					 .then(uril => {
 					 var link = document.createElement("a");
 					 link.href = uril;
-					 link.download = 'your data' + ".xls";
+					 link.download = 'my data' + ".xls";
 					 document.body.appendChild(link);
 					 link.click();
 					 document.body.removeChild(link);
-					 });
+					 }).catch(function(error){
+				alert("由于拼多多官方策略限制，你需要两个小时后重试，有其它问题请联系客服。")
+			});
 					
 			
 				resolve();
@@ -147,19 +175,7 @@ function connect(data){
 	})
 	
 }
-function randomNum(minNum,maxNum){ 
-    switch(arguments.length){ 
-        case 1: 
-            return parseInt(Math.random()*minNum+1,10); 
-        break; 
-        case 2: 
-            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
-        break; 
-            default: 
-                return 0; 
-            break; 
-    } 
-} 
+
 
 	
 
@@ -186,18 +202,18 @@ function get(data)
 function page()
 {
 	return new Promise((resolve, reject)=> {
-	setTimeout(function () {
-	fo=$("#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
-	fo.click()
+	
+	//fo=$("#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
+	$(forward).click()
 	
 	resolve();
-	},0)
+	
 	
 	})
 }
 function l()
 {	let p = Promise.resolve()
-	debugger;
+	//debugger;
 	let max=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(2)>div>div>div>div>input').val()
 	for (let i = 0 ; i < max; i++) {
     p =p.then(() => { return new Promise(resolve =>

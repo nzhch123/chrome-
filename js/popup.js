@@ -12,14 +12,20 @@ $("#sub").click(function(){
 				.then(response=>response.json())
 				.then(response =>{
 				if (response.code=="200"){
-					
+					//consloe.log("登录成功")
+
 						sendMessageToContentScript({cmd:'test', value:'success'}, function(response)
 						{
 							//console.log('来自content的回复：'+response);
 						});
 				}
 				else{
-					alert(response.msg);
+					//consloe.log(response.msg)
+					sendMessageToContentScript({cmd:'test', value:response.msg}, function(response)
+					{
+						//console.log('来自content的回复：'+response);
+					});
+					//alert(response.msg);
 				}
 	}
 				
@@ -30,10 +36,11 @@ $("#sub").click(function(){
 			function sendMessageToContentScript(message, callback)
 						{
 							chrome.tabs.query({active: true, currentWindow: true}, function(tabs)
-							{
+							{	console.log(tabs);
 								chrome.tabs.sendMessage(tabs[0].id, message, function(response)
 								{
 									if(callback) callback(response);
+
 								});
 							});
 						} 
