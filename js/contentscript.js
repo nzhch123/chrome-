@@ -1,4 +1,4 @@
-var data
+//var data
 all_data={}
 
 // var btn = document.createElement("BUTTON");
@@ -22,7 +22,7 @@ all_data={}
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
 	 console.log(sender.tab ?"from a content script:" + sender.tab.url :"from the extension");
-	if(request.cmd == 'test') 
+	if(request.cmd == 'test')
 	{
 		if(request.value=='success') {
 			//btn.style.display="inline"
@@ -43,16 +43,16 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 $(document).on('click', '#listen', function() {
 	console.log("获取");
 	// back=$(back)
-	  
+
 	//  while (back.css('cursor')=='pointer'){
 	// back.click()
-	
-	// } 
-	
-	
+
+	// }
+
+
 	Promise.resolve().then(exc).then(send).then(over)
 
-	   
+
 })
 
 
@@ -80,7 +80,7 @@ function getvars(){
 					type: 2,
 					title: '联系客服',
 					maxmin: true,
-					shadeClose: true, 
+					shadeClose: true,
 					area : ['800px' , '520px'],
 					content: 'window.html'
 				  });
@@ -92,25 +92,25 @@ function getvars(){
 					"body": "error",
 					"method": "POST",
 				})
-		
+
 	});
-		
-		
+
+
 		resolve();
-		
-		
+
+
 		})
 
-	
+
 
 }
-function exc () 
-{	
+function exc ()
+{
 	let r = Promise.resolve()
 	//let max=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(2)').text()
-	
+
 	// while (forward.css('cursor')=='pointer'){
-	 
+
     // r=r.then(l).then(page)
 	// }
 	r=r.then(l).then(page)
@@ -118,21 +118,21 @@ function exc ()
 }
 function over()
 
-{   
+{
 	return new Promise((resolve, reject)=> {
 	setTimeout(function(){
-			
+
 		chrome.runtime.sendMessage(
-			
+
 			false
-		); 	
-			
-		},0)	
+		);
+
+		},0)
 	resolve();
 	})
-	
-	
-	
+
+
+
 }
 function send()
 
@@ -141,39 +141,39 @@ function send()
 	// var num=$('body>div>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(1)')
 	// num=parseInt(num.text().slice(3,-2))
 	setTimeout(function(){
-			
+
 		chrome.runtime.sendMessage(
-			
+
 			true
 		, function (response) {
-		    data=response
-			
+		   //let data=response
+
 			//console.log(data)
-			
-			Promise.resolve(data)
-			.then( 
+
+			Promise.resolve(response)
+			.then(
 			get)
 			.then( connect
 			)
-			
-		
-		
-		
-			
-		}); 	
-		resolve();	
+
+
+
+
+
+		});
+		resolve();
 		},0)
-	
+
 	})
-	
-	
-	
+
+
+
 }
 function connect(data){
-		return new Promise((resolve, reject)=> {	
-			
-			
-			var jsonStr = JSON.stringify(data.fill); 
+		return new Promise((resolve, reject)=> {
+
+
+			var jsonStr = JSON.stringify(data.fill);
 			// r=randomNum(1000000,900000000)
 			// r=r.toString()
 			console.log(jsonStr)
@@ -197,48 +197,48 @@ function connect(data){
 					 }).catch(function(error){
 				alert("请稍后尝试，有问题请联系客服")
 			});
-					
-			
+
+
 				resolve();
-	
-	
+
+
 	})
-	
+
 }
 
 
-	
+
 
 
 function get(data)
 {
-	
+
 	console.log(data)
 	var all_data={}
-	
+
 	let  p = Promise.resolve({'hb':data,'order':0,'fill':all_data})
-	
+
 	for (let i = 0; i < Object.keys(data.head).length; i++)
 	{
-		
+
 		p = p.then(f)
-		
+
 	}
 	 return p
-	
-	
-}	
-	
+
+
+}
+
 function page()
 {
 	return new Promise((resolve, reject)=> {
-	
+
 	//fo=$("#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
 	//$(forward).click()
-	
+
 	resolve();
-	
-	
+
+
 	})
 }
 function l()
@@ -251,10 +251,10 @@ function l()
 			resolve();
         },  0)
 	  )})
-	.then(() => { 
+	.then(() => {
 	return new Promise(resolve =>
         setTimeout(function () {
-            
+
 			//$('body>div:nth-last-child(1)>div>div>div:nth-child(3)>div:nth-child(2)>button>span').click()
 			$("span:contains(确定)").click();
             resolve();
@@ -262,24 +262,24 @@ function l()
     )}
 
 	)
-	
+
 }
 
 return p
 }
-function f(obj) 
+function f(obj)
 			{
-				
-            return new Promise((resolve, reject)=> {  
-				
+
+            return new Promise((resolve, reject)=> {
+
 				let s=obj.hb.body[obj['order']];
-				s_str=s.parseJSON();
+				let s_obj=eval('(' + s + ')');
                 fetch("https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsSpanDateList", {
                     "credentials": "include",
                     "headers": {
                         "accept": "application/json",
                         "accept-language": "zh-CN,zh;q=0.9",
-                        "anti-content":s_str,
+                        "anti-content":s_obj["crawlerInfo"],
                         "content-type": "application/json;charset=UTF-8"
                     },
                     "referrer": "https://mms.pinduoduo.com/sycm/goods_effect",
@@ -289,23 +289,23 @@ function f(obj)
                     "mode": "cors"
                 })
                 .then((res) => {
-                    return res.text() 
+                    return res.text()
                 })
                 .then((res) => {
-                     
+
 					obj.fill[order]=res;
 					obj.order=obj.order+1;
 					obj.fill.order=res;
 					return obj;
-					
-					
+
+
 				})
 				.then((res) => {
-                     
-					
+
+
 					resolve(res);
-					
+
 				})
-			
-		}) 
-            } 		
+
+		})
+            }
