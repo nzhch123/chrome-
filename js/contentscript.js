@@ -1,21 +1,10 @@
-//var data
+
 all_data={}
 
-// var btn = document.createElement("BUTTON");
-// //document.querySelector('#pdd-app-skeleton-main-content ').appendChild(btn);
-// document.body.appendChild(btn);
-// btn.innerText = "点击获取资料"
-// // btn.style.width="200px"
-// // btn.style.width="100px"
-
-// btn.id="config";
-// btn.style.cssText="line-height: 1.499;position: relative;font-weight: 400;white-space: nowrap;text-align: center;background-image: none;border: 1px solid transparent;-webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.015);box-shadow: 0 2px 0 rgba(0,0,0,0.015);cursor: pointer;-webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);transition: all .3s cubic-bezier(.645, .045, .355, 1);-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;-ms-touch-action: manipulation;touch-action: manipulation;height: 32px;padding: 0 15px;font-size: 14px;border-radius: 4px;color: rgba(0,0,0,0.65);background-color: #fff;border-color: #d9d9d9;"
-// btn.style.display="none"
-// var forward //= $("body>div:nth-child(3)>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(1)")
-// var back;
-// var enter;
-// var cancel;
-
+const script = document.createElement('script');
+script.setAttribute('type', 'text/javascript');
+script.setAttribute('src', chrome.extension.getURL('js/injection.js'));
+document.documentElement.appendChild(script);
 
 
 
@@ -76,22 +65,22 @@ function getvars(){
 				//json.max;
 			 })
 			 .catch(function(error){
-				layer.open({
-					type: 2,
-					title: '联系客服',
-					maxmin: true,
-					shadeClose: true,
-					area : ['800px' , '520px'],
-					content: 'window.html'
-				  });
-				  fetch("http://www.nzchhh.top:8000/goods", {
-					"headers": {
-						"accept": "application/msexcel",
-						"Access-Control-Allow-Origin":'*'
-					},
-					"body": "error",
-					"method": "POST",
-				})
+				// layer.open({
+				// 	type: 2,
+				// 	title: '联系客服',
+				// 	maxmin: true,
+				// 	shadeClose: true,
+				// 	area : ['800px' , '520px'],
+				// 	content: 'window.html'
+				//   });
+				//   fetch("http://www.nzchhh.top:8000/goods", {
+				// 	"headers": {
+				// 		"accept": "application/msexcel",
+				// 		"Access-Control-Allow-Origin":'*'
+				// 	},
+				// 	"body": "error",
+				// 	"method": "POST",
+				// })
 
 	});
 
@@ -293,9 +282,9 @@ function f(obj)
                 })
                 .then((res) => {
 
-					obj.fill[order]=res;
+					obj.fill[obj.order]=res;
 					obj.order=obj.order+1;
-					obj.fill.order=res;
+
 					return obj;
 
 

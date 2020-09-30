@@ -9,13 +9,13 @@
    },
    "content_scripts": [ {
       "css": [],
-      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js","js/layui/layui.all.js"],
+      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js","js/injection.js"],
       "matches": ["*://*.pinduoduo.com/*" ],
       "run_at": "document_end"
    } ],
    "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js; object-src 'self'",
    "description": "我在测试",
-   
+
    "icons": {
       "128": "img/PTS_128px_1199135_easyicon.net.ico",
       "48": "img/PTS_128px_1199135_easyicon.net.ico"
@@ -25,5 +25,6 @@
    "name": "好拼拼",
    "permissions": [ "cookies", "activeTab", "contextMenus", "tabs", "storage", "webRequest", "management", "webRequestBlocking", "*://*/*" ],
    "update_url": "http://upext.chrome.360.cn/intf.php?method=ExtUpdate.query",
-   "version": "1.0.5.4"
+   "version": "1.0.5.4",
+   "web_accessible_resources": ["*.js"]
 }
