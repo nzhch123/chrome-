@@ -9,7 +9,7 @@
    },
    "content_scripts": [ {
       "css": [],
-      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/element-xpath.min.js","js/injection.js"],
+      "js": [ "js/jquery-3.3.1.min.js","js/contentscript.js","js/injected-script.js"],
       "matches": ["*://*.pinduoduo.com/*" ],
       "run_at": "document_end"
    } ],

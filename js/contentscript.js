@@ -1,9 +1,10 @@
 
 all_data={}
-
+flag=0;
+order=0;
 const script = document.createElement('script');
 script.setAttribute('type', 'text/javascript');
-script.setAttribute('src', chrome.extension.getURL('js/injection.js'));
+script.setAttribute('src', chrome.extension.getURL('js/injected-script.js'));
 document.documentElement.appendChild(script);
 
 
@@ -22,7 +23,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 		{
 			console.log(request.value)
 		}
-		//alert("收到")
+
 		}
 
 });
@@ -39,124 +40,56 @@ $(document).on('click', '#listen', function() {
 	// }
 
 
-	Promise.resolve().then(exc).then(send).then(over)
+	Promise.resolve().then(exc).then(send)
+
 
 
 })
 
-
-
-function getvars(){
-	return new Promise((resolve, reject)=> {
-		fetch("http://www.nzchhh.top:8000/goods", {
-			"headers": {
-				"accept": "application/msexcel",
-				"Access-Control-Allow-Origin":'*'
-			},
-			"body": jsonStr,
-			"method": "POST",
-		})
-		.then(response => response.json())
-			 .then(json =>{
-				back=json.back;
-				cancel= json.cancel;
-				enter=json.enter;
-				forward=json.forward;
-				//json.max;
-			 })
-			 .catch(function(error){
-				// layer.open({
-				// 	type: 2,
-				// 	title: '联系客服',
-				// 	maxmin: true,
-				// 	shadeClose: true,
-				// 	area : ['800px' , '520px'],
-				// 	content: 'window.html'
-				//   });
-				//   fetch("http://www.nzchhh.top:8000/goods", {
-				// 	"headers": {
-				// 		"accept": "application/msexcel",
-				// 		"Access-Control-Allow-Origin":'*'
-				// 	},
-				// 	"body": "error",
-				// 	"method": "POST",
-				// })
-
-	});
-
-
-		resolve();
-
-
-		})
-
-
-
-}
 function exc ()
 {
 	let r = Promise.resolve()
-	//let max=$('#root>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-last-child(2)').text()
+	r=r.then(set_init)
+	r=r.then(l);
+	max=0;
+	for (let j = 0 ; j < max-1; j++) {
 
-	// while (forward.css('cursor')=='pointer'){
-
-    // r=r.then(l).then(page)
-	// }
-	r=r.then(l).then(page)
+		r=r.then(page).then(l)
+	}
+	r=r.then(set_finish)
 	return r
+
 }
-function over()
-
-{
+function set_finish(){
 	return new Promise((resolve, reject)=> {
-	setTimeout(function(){
+		window.postMessage("finish", '*');
+		resolve();
 
-		chrome.runtime.sendMessage(
 
-			false
-		);
-
-		},0)
-	resolve();
 	})
+}
+function set_init(){
+		return new Promise((resolve, reject)=> {
+			window.postMessage("start", '*');
+			resolve();
 
 
+		})
 
 }
 function send()
 
 {
 	return new Promise((resolve, reject)=> {
-	// var num=$('body>div>div>div>main>div>div:nth-child(3)>div>div:nth-child(2)>div>div>div:nth-child(2)>div:nth-child(2)>div>div:nth-child(2)>div>div:nth-child(2)>div>ul>li:nth-child(1)')
-	// num=parseInt(num.text().slice(3,-2))
-	setTimeout(function(){
 
-		chrome.runtime.sendMessage(
-
-			true
-		, function (response) {
-		   //let data=response
-
-			//console.log(data)
-
-			Promise.resolve(response)
-			.then(
-			get)
-			.then( connect
-			)
-
-
-
-
-
+		chrome.runtime.sendMessage(all_data, function(response) {
+			console.log('收到来自后台的回复：');
 		});
+
 		resolve();
-		},0)
+
 
 	})
-
-
-
 }
 function connect(data){
 		return new Promise((resolve, reject)=> {
@@ -166,25 +99,28 @@ function connect(data){
 			// r=randomNum(1000000,900000000)
 			// r=r.toString()
 			console.log(jsonStr)
-			fetch("http://www.nzchhh.top:8000/goods", {
-					"headers": {
-						"accept": "application/msexcel",
-						"Access-Control-Allow-Origin":'*'
-					},
-					"body": jsonStr,
-					"method": "POST",
-				})
-				.then(response => response.blob())
-					 .then(blob => URL.createObjectURL(blob))
-					 .then(uril => {
-					 var link = document.createElement("a");
-					 link.href = uril;
-					 link.download = 'my data' + ".xls";
-					 document.body.appendChild(link);
-					 link.click();
-					 document.body.removeChild(link);
-					 }).catch(function(error){
-				alert("请稍后尝试，有问题请联系客服")
+			// fetch("http://www.nzchhh.top:8000/goods", {
+			// 		"headers": {
+			// 			"accept": "application/msexcel",
+			// 			"Access-Control-Allow-Origin":'*'
+			// 		},
+			// 		"body": jsonStr,
+			// 		"method": "POST",
+			// 	})
+			// 	.then(response => response.blob())
+			// 		 .then(blob => URL.createObjectURL(blob))
+			// 		 .then(uril => {
+			// 		 var link = document.createElement("a");
+			// 		 link.href = uril;
+			// 		 link.download = 'my data' + ".xls";
+			// 		 document.body.appendChild(link);
+			// 		 link.click();
+			// 		 document.body.removeChild(link);
+			// 		 }).catch(function(error){
+			// 	alert("请稍后尝试，有问题请联系客服")
+			// });
+			chrome.runtime.sendMessage({greeting: '你好，我是content-script呀，我主动发消息给后台！'}, function(response) {
+				console.log('收到来自后台的回复：' + response);
 			});
 
 
@@ -195,28 +131,6 @@ function connect(data){
 
 }
 
-
-
-
-
-function get(data)
-{
-
-	console.log(data)
-	var all_data={}
-
-	let  p = Promise.resolve({'hb':data,'order':0,'fill':all_data})
-
-	for (let i = 0; i < Object.keys(data.head).length; i++)
-	{
-
-		p = p.then(f)
-
-	}
-	 return p
-
-
-}
 
 function page()
 {
@@ -256,45 +170,4 @@ function l()
 
 return p
 }
-function f(obj)
-			{
 
-            return new Promise((resolve, reject)=> {
-
-				let s=obj.hb.body[obj['order']];
-				let s_obj=eval('(' + s + ')');
-                fetch("https://mms.pinduoduo.com/sydney/api/goodsDataShow/queryGoodsSpanDateList", {
-                    "credentials": "include",
-                    "headers": {
-                        "accept": "application/json",
-                        "accept-language": "zh-CN,zh;q=0.9",
-                        "anti-content":s_obj["crawlerInfo"],
-                        "content-type": "application/json;charset=UTF-8"
-                    },
-                    "referrer": "https://mms.pinduoduo.com/sycm/goods_effect",
-                    "referrerPolicy": "no-referrer-when-downgrade",
-                    "body": s,
-                    "method": "POST",
-                    "mode": "cors"
-                })
-                .then((res) => {
-                    return res.text()
-                })
-                .then((res) => {
-
-					obj.fill[obj.order]=res;
-					obj.order=obj.order+1;
-
-					return obj;
-
-
-				})
-				.then((res) => {
-
-
-					resolve(res);
-
-				})
-
-		})
-            }
