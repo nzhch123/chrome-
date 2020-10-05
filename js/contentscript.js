@@ -1,13 +1,29 @@
 
 all_data={}
-flag=0;
-order=0;
+order=0
+var now_page_order=1
+var fetch_status="originfetch"
 const script = document.createElement('script');
 script.setAttribute('type', 'text/javascript');
 script.setAttribute('src', chrome.extension.getURL('js/injected-script.js'));
 document.documentElement.appendChild(script);
 
+window.addEventListener("message", function(e)
+{   if (e.origin=="https://mms.pinduoduo.com"){
+	if (e.data.from=="injected"){
+		all_data[order]=e.data.content;
+		order++;
+		now_page_order++;
+		}
+	}
+	// if (e.origin=="https://mms.pinduoduo.com"){
+	// 	if (e.data.from=="injected"){
+	// 		all_data[order]=e.data.content;
+	// 		order++;
+	// 	}
+	// }
 
+}, false);
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse)
 {
@@ -51,18 +67,45 @@ function exc ()
 	let r = Promise.resolve()
 	r=r.then(set_init)
 	r=r.then(l);
-	max=0;
+	max=1;
 	for (let j = 0 ; j < max-1; j++) {
 
-		r=r.then(page).then(l)
+		r=r.then(set_pause).then(page).then(l)
 	}
 	r=r.then(set_finish)
 	return r
 
 }
+function set_pause(){
+	return new Promise((resolve, reject)=> {
+
+		window.postMessage("finish_pin", '*');
+
+		resolve();
+
+
+	})
+}
 function set_finish(){
 	return new Promise((resolve, reject)=> {
-		window.postMessage("finish", '*');
+
+
+		var judage = function(){
+			if(now_page_order == $("span:contains(详情)").length/2){
+				window.postMessage("finish_pin", '*');
+				all_data={}
+				order=0;
+			}
+			else{
+				//20毫秒轮询一次
+				setTimeout(judage, 20)
+			}
+		}
+
+		judage();
+			all_data={}
+			order=0;
+
 		resolve();
 
 
@@ -70,7 +113,7 @@ function set_finish(){
 }
 function set_init(){
 		return new Promise((resolve, reject)=> {
-			window.postMessage("start", '*');
+			window.postMessage("start_pin", '*');
 			resolve();
 
 
@@ -83,7 +126,19 @@ function send()
 	return new Promise((resolve, reject)=> {
 
 		chrome.runtime.sendMessage(all_data, function(response) {
-			console.log('收到来自后台的回复：');
+			Promise.resolve(response)
+					 .then(blob => URL.createObjectURL(blob))
+					 .then(uril => {
+					 var link = document.createElement("a");
+					 link.href = uril;
+					 link.download = 'my data' + ".xls";
+					 document.body.appendChild(link);
+					 link.click();
+					 document.body.removeChild(link);
+					 }).catch(function(error){
+				alert("请稍后尝试，有问题请联系客服")
+			});
+
 		});
 
 		resolve();
@@ -119,9 +174,7 @@ function connect(data){
 			// 		 }).catch(function(error){
 			// 	alert("请稍后尝试，有问题请联系客服")
 			// });
-			chrome.runtime.sendMessage({greeting: '你好，我是content-script呀，我主动发消息给后台！'}, function(response) {
-				console.log('收到来自后台的回复：' + response);
-			});
+
 
 
 				resolve();
@@ -160,6 +213,7 @@ function l()
 
 			//$('body>div:nth-last-child(1)>div>div>div:nth-child(3)>div:nth-child(2)>button>span').click()
 			$("span:contains(确定)").click();
+			now_page_order++;
             resolve();
         },  0)
     )}
